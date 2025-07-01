@@ -405,3 +405,25 @@ function scrollToSupportSection(sectionId) {
         if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 300); // Wait for showPage to display the section
 }
+
+// Configuration
+const CONFIG = {
+  WEB_APP_URL: "https://script.google.com/macros/s/AKfycby5J9quLmSpb1wXMJOJaOM8KZB4aD3DCYRmFybsYEr71lLzVGhDymSvCy6xIpdFpmjYlQ/exec",
+};
+
+// Make showPage and scrollToSupportSection available globally
+window.showPage = showPage;
+window.scrollToSupportSection = scrollToSupportSection;
+function showCategory(category) {
+    showPage('shop');
+    // Wait for shop page to be visible, then check the filter
+    setTimeout(() => {
+        const checkbox = document.getElementById('filter-' + category.replace('-', ''));
+        if (checkbox) {
+            checkbox.checked = true;
+            // Optionally, trigger your filtering logic here if you have one
+            if (typeof applyFilters === 'function') applyFilters();
+        }
+    }, 100);
+}
+window.showCategory = showCategory;

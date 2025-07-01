@@ -668,6 +668,133 @@ body {
     margin-bottom: 20px;
 }
 
+/* Thank You Page Styles */
+.thank-you-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    position: relative;
+    overflow: hidden;
+}
+
+.thank-you-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(40, 167, 69, 0.05) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.3; }
+}
+
+.thank-you-icon {
+    position: relative;
+    z-index: 2;
+}
+
+.thank-you-icon i {
+    animation: bounceIn 0.8s ease-out;
+    filter: drop-shadow(0 4px 8px rgba(40, 167, 69, 0.3));
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3) rotate(-180deg); opacity: 0; }
+    50% { transform: scale(1.05) rotate(-10deg); }
+    70% { transform: scale(0.9) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.thank-you-title {
+    color: #28a745;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+    animation: slideInUp 0.6s ease-out 0.3s both;
+}
+
+@keyframes slideInUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.thank-you-message {
+    color: #495057;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+    animation: slideInUp 0.6s ease-out 0.5s both;
+}
+
+.thank-you-details {
+    position: relative;
+    z-index: 2;
+    animation: slideInUp 0.6s ease-out 0.7s both;
+}
+
+.thank-you-details p {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    border-left: 4px solid #28a745;
+}
+
+.thank-you-actions {
+    position: relative;
+    z-index: 2;
+    animation: slideInUp 0.6s ease-out 0.9s both;
+}
+
+.thank-you-actions .btn {
+    min-width: 180px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.thank-you-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.thank-you-footer {
+    position: relative;
+    z-index: 2;
+    animation: slideInUp 0.6s ease-out 1.1s both;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.thank-you-footer h5 {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.social-links .btn {
+    border-radius: 20px;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.social-links .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-title {
