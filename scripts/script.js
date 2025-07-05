@@ -1,5 +1,5 @@
 // Terra Balance E-commerce JavaScript
-
+import { loginUser, registerUser } from './auth.js';
 // Global Variables
 let currentUser = null;
 let cart = [];
@@ -315,52 +315,57 @@ function setupEventListeners() {
     if (sortFilter) sortFilter.addEventListener('change', applyFilters);
 
     // Signup Form Handler
-    const signupForm = document.getElementById('signup-form');
-    if (signupForm) {
-        signupForm.onsubmit = e => {
-            e.preventDefault();
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-            if (password !== confirmPassword) {
-                alert("Passwords do not match.");
-                return;
+const signupForm = document.getElementById('signup-form');
+if (signupForm) {
+    signupForm.onsubmit = async e => {
+        e.preventDefault();
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
+        const name = document.getElementById('signup-name')?.value || email; // Add name field if needed
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        try {
+            const result = await registerUser({ email, password, name });
+            if (result.success) {
+                alert("Signup successful. Please log in.");
+                showPage('login');
+            } else {
+                alert(result.error || "Registration failed");
             }
+        } catch (error) {
+            alert("Network error. Please try again.");
+        }
+    };
+}
 
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            if (users.find(user => user.email === email)) {
-                alert("Email is already registered.");
-                return;
-            }
+// Update your login form handler:
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+    loginForm.onsubmit = async e => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
 
-            users.push({ email, password });
-            localStorage.setItem('users', JSON.stringify(users));
-            alert("Signup successful. Please log in.");
-            showPage('login');
-        };
-    }
-
-    // Login Form Handler
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.onsubmit = e => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(user => user.email === email && user.password === password);
-
-            if (user) {
+        try {
+            const result = await loginUser(email, password);
+            if (result.success) {
                 alert("Login successful!");
-                currentUser = user;
+                currentUser = result.user;
                 showPage('home');
             } else {
-                alert("Invalid email or password.");
+                alert(result.error || "Invalid credentials");
             }
-        };
-    }
+        } catch (error) {
+            alert("Network error. Please try again.");
+        }
+    };
+}
 
     // Checkout Form
     const checkoutForm = document.getElementById('checkout-form');

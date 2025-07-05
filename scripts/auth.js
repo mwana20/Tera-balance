@@ -1,58 +1,38 @@
-// auth.js
-const AUTH_API_URL = "https://docs.google.com/spreadsheets/d/1iuRuo_-EwQ38-R1-Daie1TK3p7Xne-sV2bA1Aad6CFc/edit?resourcekey=&gid=0#gid=0";
+
+const AUTH_API_URL = "https://script.google.com/macros/s/AKfycbyYUHnp8s_jD3H4yxIbmW7A3FWgbfr7bnNbW1VVzk5xZvryWPozZdIgYy_YOm9XLRWl3A/exec";
 
 export async function loginUser(email, password) {
   try {
-    const response = await fetch(AUTH_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'login',
-        email: email,
-        password: password
-      })
+    const url = `${AUTH_API_URL}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      redirect: 'follow'
     });
     
     const data = await response.json();
     
-    // Successful login
     if (data.success) {
-      // Store user data in localStorage
       localStorage.setItem('user', JSON.stringify(data.user));
       localStorage.setItem('lastLogin', new Date().toISOString());
-      
-      return {
-        success: true,
-        user: data.user
-      };
+      return { success: true, user: data.user };
     }
     
-    // Failed login
-    return {
-      success: false,
-      error: data.error || 'Invalid credentials'
-    };
+    return { success: false, error: data.error || 'Invalid credentials' };
     
   } catch (error) {
     console.error('Login error:', error);
-    return {
-      success: false,
-      error: 'Network error. Please try again.'
-    };
+    return { success: false, error: 'Network error. Please try again.' };
   }
 }
 
 export async function registerUser({ email, password, name }) {
   try {
-    const response = await fetch(AUTH_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'register',
-        email: email,
-        password: password,
-        name: name
-      })
+    const url = `${AUTH_API_URL}?action=register&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&name=${encodeURIComponent(name)}`;
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      redirect: 'follow'
     });
     
     const data = await response.json();
@@ -61,16 +41,10 @@ export async function registerUser({ email, password, name }) {
       return { success: true };
     }
     
-    return {
-      success: false,
-      error: data.error || 'Registration failed'
-    };
+    return { success: false, error: data.error || 'Registration failed' };
     
   } catch (error) {
     console.error('Registration error:', error);
-    return {
-      success: false,
-      error: 'Network error. Please try again.'
-    };
+    return { success: false, error: 'Network error. Please try again.' };
   }
 }
