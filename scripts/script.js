@@ -197,7 +197,8 @@ function addToCartFromDetail() {
 }
 
 // --- Add to Cart ---
-function addToCart(productId, qty = 1) {
+function addToCart(event, productId, qty = 1) {
+    console.log('addToCart called with:', productId, qty);
     const prod = products.find(p => p.id === productId);
     if (!prod) return;
     const item = cart.find(i => i.id === productId);
@@ -432,3 +433,12 @@ function showCategory(category) {
     }, 100);
 }
 window.showCategory = showCategory;
+
+// Make functions available globally for inline onclick handlers
+window.addToCart = addToCart;
+window.showProductDetail = showProductDetail;
+window.changeQuantity = changeQuantity;
+window.addToCartFromDetail = addToCartFromDetail;
+window.updateCartQty = updateCartQty;
+window.setCartQty = setCartQty;
+window.removeFromCart = removeFromCart;
